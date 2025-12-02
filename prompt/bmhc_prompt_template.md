@@ -1,6 +1,6 @@
-# BMHC Quarter 4 2024
+# BMHC Prompt Template
 
-### Welcome to the Black Men's Health Clinic Q4 2024 Data Report. This project involves analyzing data collected from various service interactions and aims to provide insights into the services provided, demographic information, and other relevant data points to improve service delivery and outcomes.
+### Welcome to the Black Men's Health Clinic Impact Report. This project involves analyzing data collected from various service interactions and aims to provide insights into the services provided, demographic information, and other relevant data points to improve service delivery and outcomes.
 
 #### The dataset includes the following columns:
 

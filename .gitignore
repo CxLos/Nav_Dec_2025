@@ -1,2 +1,5 @@
 020525
 020525.pub
+venv/
+.env
+data/
