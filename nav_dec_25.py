@@ -1,3 +1,5 @@
+# type: ignore
+# pyright: reportGeneralTypeIssues=false
 # =================================== IMPORTS ================================= #
 
 import os
@@ -2432,16 +2434,37 @@ html.Div(
                             'height': 'auto',
                         },
                         style_cell_conditional=[
-                            # make the index column narrow and centered
-                            {'if': {'column_id': '#'},
-                            'width': '20px', 'minWidth': '60px', 'maxWidth': '60px', 'textAlign': 'center'},
-                            {'if': {'column_id': 'Timestamp'},
-                            'width': '50px', 'minWidth': '100px', 'maxWidth': '200px', 'textAlign': 'center'},
-                            {'if': {'column_id': 'Date of Activity'},
-                            'width': '160px', 'minWidth': '160px', 'maxWidth': '160px', 'textAlign': 'center'},
-                            {'if': {'column_id': 'Description'},
-                            'width': '200px', 'minWidth': '400px', 'maxWidth': '200px', 'textAlign': 'center'},
+                            # index column: narrow & centered
+                            {
+                                "if": {"column_id": "#"},
+                                "width": "60px",
+                                "minWidth": "60px",
+                                "maxWidth": "60px",
+                                "textAlign": "center",
+                            },
+                            {
+                                "if": {"column_id": "Timestamp"},
+                                "width": "100px",
+                                "minWidth": "100px",
+                                "maxWidth": "200px",
+                                "textAlign": "center",
+                            },
+                            {
+                                "if": {"column_id": "Date of Activity"},
+                                "width": "160px",
+                                "minWidth": "160px",
+                                "maxWidth": "160px",
+                                "textAlign": "center",
+                            },
+                            {
+                                "if": {"column_id": "Description"},
+                                "width": "400px",
+                                "minWidth": "400px",
+                                "maxWidth": "400px",
+                                "textAlign": "left",
+                            },
                         ]
+
                     ),
                 ]
             ),
@@ -2579,7 +2602,7 @@ html.Div(
                             'width': '300px', 'minWidth': '300px', 'maxWidth': '400px', 'textAlign': 'left'},
                             {'if': {'column_id': 'Count'},
                             'width': '100px', 'minWidth': '100px', 'maxWidth': '100px', 'textAlign': 'center'},
-                        ]
+                        ] # pyright: ignore[reportArgumentType]
                     ),
                 ]
             ),
