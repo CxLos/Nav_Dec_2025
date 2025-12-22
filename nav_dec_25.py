@@ -22,7 +22,6 @@ from folium.plugins import MousePosition
 
 import dash
 from dash import dcc, html, dash_table, Input, Output, State, callback_context
-
 # Google Web Credentials
 import json
 import base64
@@ -70,14 +69,14 @@ df = data.copy()
 df.columns = df.columns.str.strip()
 
 # Get the reporting month:
-current_month = datetime(2025, 12, 1).strftime("%B")
+report_month = datetime(2025, 12, 1).strftime("%B")
 report_year = datetime(2025, 12, 1).year
 int_month = 12
 
 # Filtered df where 'Date of Activity:' is in October
 df["Date of Activity"] = pd.to_datetime(df["Date of Activity"], errors='coerce')
 # df["Date of Activity"] = df["Date of Activity"].dt.tz_localize('UTC')  # or local timezone first, then convert to UTC
-df = df[(df['Date of Activity'].dt.month == int_month) & (df['Date of Activity'].dt.year == report_year)]
+df = df[(df['Date of Activity'].dt.month == int_month) & (df['Date of Activity'].dt.year == report_year)]  # type: ignore
 # Sort df from oldest to newest
 df = df.sort_values(by='Date of Activity', ascending=True)
 
@@ -89,6 +88,9 @@ for col in df.select_dtypes(include='object').columns:
     df[col] = df[col].map(lambda x: x.strip() if isinstance(x, str) else x)
 
 # df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+
+# Create Full Name column
+df['Full Name'] = df["Individual's First Name:"].astype(str) + " " + df["Individual's Last Name:"].astype(str)
 
 # Define a discrete color sequence
 # color_sequence = px.colors.qualitative.Plotly
@@ -158,6 +160,36 @@ df.rename(
         # "" : "",
     }, 
 inplace=True)
+
+# Search for all duplicates in dataset:
+duplicates = df[df.duplicated(keep=False)]
+# print("Duplicate entries in dataset:\n", duplicates)
+
+# Find duplicate rows where both first and last names match:
+duplicate_rows = df[df.duplicated(subset=["Individual's First Name:", "Individual's Last Name:"], keep=False)][["Individual's First Name:", "Individual's Last Name:", 'Date of Activity']].sort_values(["Individual's Last Name:", "Individual's First Name:"])
+# print("Duplicate name entries:\n", duplicate_rows)
+
+# Show duplicate names with their counts
+duplicate_counts = df[df.duplicated(subset=["Individual's First Name:", "Individual's Last Name:"], keep=False)].groupby(["Individual's First Name:", "Individual's Last Name:"]).size().reset_index(name='Count').sort_values('Count', ascending=False)
+# print("Duplicate name counts:\n", duplicate_counts)
+
+# ========================== SPREADSHEET COMPARISON ========================== #
+
+# Load second spreadsheet for comparison
+sheet_url_2 = "https://docs.google.com/spreadsheets/d/1GWnQrLptjkgg8CR1G8OpYaCHZMmW5xOzg0kFtPCkxKw/edit?gid=34671814#gid=34671814"
+sheet_2 = client.open_by_url(sheet_url_2)
+worksheet_2 = sheet_2.worksheet(f"{report_month}")
+data_2 = pd.DataFrame(worksheet_2.get_all_records())
+df_2 = data_2.copy()
+df_2.columns = df_2.columns.str.strip()
+
+# Find records in df_2 that are NOT in df
+missing_in_main = df_2[~df_2['seeker_name'].isin(df['Full Name'])][["seeker_name", 'created_at']].sort_values(['seeker_name', 'created_at'])
+# print(f"\nRecords in FH NOT in Navigation ({len(missing_in_main)}):\n", missing_in_main)
+
+# Find records in df that are NOT in df_2
+missing_in_comparison = df[~df['Full Name'].isin(df_2['seeker_name'])][['Full Name', 'Date of Activity', 'Person']].sort_values(['Full Name', 'Date of Activity'])
+# print(f"\nRecords in Navigation NOT in Findhelp ({len(missing_in_comparison)}):\n", missing_in_comparison)
 
 # ------------------------------- Clients Serviced ---------------------------- #
 
@@ -1886,14 +1918,14 @@ app.layout = html.Div(
                     'Client Navigation Report', 
                     className='title'),
                 html.H1(
-                    f'{current_month} {report_year}', 
+                    f'{report_month} {report_year}', 
                     className='title2'),
                 html.Div(
                     className='btn-box', 
                     children=[
                         html.A(
                             'Repo',
-                            href=f'https://github.com/CxLos/Nav_{current_month}_{report_year}',
+                            href=f'https://github.com/CxLos/Nav_{report_month}_{report_year}',
                             className='btn'
                         ),
                     ]
@@ -1916,7 +1948,7 @@ html.Div(
                     children=[
                         html.H3(
                             className='rollup-title',
-                            children=[f'{current_month} Clients Served']
+                            children=[f'{report_month} Clients Served']
                         ),
                     ]
                 ),
@@ -1945,7 +1977,7 @@ html.Div(
                     children=[
                         html.H3(
                             className='rollup-title',
-                            children=[f'{current_month} Navigation Hours']
+                            children=[f'{report_month} Navigation Hours']
                         ),
                     ]
                 ),
@@ -1979,7 +2011,7 @@ html.Div(
                     children=[
                         html.H3(
                             className='rollup-title',
-                            children=[f'{current_month} Travel Hours']
+                            children=[f'{report_month} Travel Hours']
                         ),
                     ]
                 ),
@@ -2920,9 +2952,9 @@ if __name__ == '__main__':
                 
 # ----------------------------------------------- Updated Database --------------------------------------
 
-# updated_path = f'data/Navigation_{current_month}_{report_year}.xlsx'
+# updated_path = f'data/Navigation_{report_month}_{report_year}.xlsx'
 # data_path = os.path.join(script_dir, updated_path)
-# sheet_name=f'{current_month} {report_year}'
+# sheet_name=f'{report_month} {report_year}'
 
 # with pd.ExcelWriter(data_path, engine='xlsxwriter') as writer:
 #     df.to_excel(
