@@ -818,7 +818,7 @@ location_bar=px.bar(
     text='Count',
 ).update_layout(
     title=dict(
-        text='Location Encountered Bar Chart',
+        text='Outreach/ Locations Encountered',
         x=0.5, 
         font=dict(
             size=21,
@@ -873,7 +873,7 @@ location_pie=px.pie(
     values='Count'
 ).update_layout(
     title=dict(
-        text='Ratio of Locations Encountered',
+        text='Ratio of Outreach/ Locations Encountered',
         x=0.5, 
         font=dict(
             size=21,
@@ -1019,7 +1019,7 @@ support_bar=px.bar(
     text='Count',
 ).update_layout(
     title=dict(
-        text='Support Provided Distribution',
+        text='Type of Coordination Provided',
         x=0.5, 
         font=dict(
             size=21,
@@ -1037,7 +1037,7 @@ support_bar=px.bar(
         tickfont=dict(size=16),  # Adjust font size for the tick labels
         title=dict(
             # text=None,
-            text="Type of Support",
+            text="Type of Coordination",
             font=dict(size=16),  # Font size for the title
         ),
         showticklabels=False  # Hide x-tick labels
@@ -1073,7 +1073,7 @@ support_pie = px.pie(
     values='Count',
 ).update_layout(
     title=dict(
-        text='Ratio of Support Distribution',
+        text='Ratio of Coordination Services Provided',
         x=0.5, 
         font=dict(
             size=21,
@@ -2914,7 +2914,7 @@ def location_drill_navigation(clickData, home_clicks, state):
             text='Count',
         ).update_layout(
             title=dict(
-                text='Location Encountered Bar Chart (Click to drill down)',
+                text='Outreach/ Locations Encountered (Click to drill down)',
                 x=0.5, 
                 font=dict(size=21, family='Calibri', color='black')
             ),
