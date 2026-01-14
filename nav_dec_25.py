@@ -2654,71 +2654,71 @@ def location_drill_navigation(clickData, home_clicks, state):
 
 print(f"Serving Flask app '{current_file}'! 🚀")
 
-# if __name__ == '__main__':
-#     app.run(debug=
-#                    True)
+if __name__ == '__main__':
+    app.run(debug=
+                   True)
                 #    False)
                 
 # ----------------------------------------------- Updated Database --------------------------------------
 
-updated_path = f'data/Navigation_{report_month}_{report_year}.xlsx'
-data_path = os.path.join(script_dir, updated_path)
-sheet_name=f'{report_month} {report_year}'
+# updated_path = f'data/Navigation_{report_month}_{report_year}.xlsx'
+# data_path = os.path.join(script_dir, updated_path)
+# sheet_name=f'{report_month} {report_year}'
 
-with pd.ExcelWriter(data_path, engine='xlsxwriter') as writer:
-    df.to_excel(
-            writer, 
-            sheet_name=sheet_name, 
-            startrow=1, 
-            index=False
-        )
+# with pd.ExcelWriter(data_path, engine='xlsxwriter') as writer:
+#     df.to_excel(
+#             writer, 
+#             sheet_name=sheet_name, 
+#             startrow=1, 
+#             index=False
+#         )
 
-    # Access the workbook and each worksheet
-    workbook = writer.book
-    sheet1 = writer.sheets[sheet_name]
+#     # Access the workbook and each worksheet
+#     workbook = writer.book
+#     sheet1 = writer.sheets[sheet_name]
     
-    # Define the header format
-    header_format = workbook.add_format({
-        'bold': True, 
-        'font_size': 16, 
-        'align': 'center', 
-        'valign': 'vcenter',
-        'border': 1, 
-        'font_color': 'black', 
-        'bg_color': '#B7B7B7',
-    })
+#     # Define the header format
+#     header_format = workbook.add_format({
+#         'bold': True, 
+#         'font_size': 16, 
+#         'align': 'center', 
+#         'valign': 'vcenter',
+#         'border': 1, 
+#         'font_color': 'black', 
+#         'bg_color': '#B7B7B7',
+#     })
     
-    # Set column A (Name) to be left-aligned, and B-E to be right-aligned
-    left_align_format = workbook.add_format({
-        'align': 'left',  # Left-align for column A
-        'valign': 'vcenter',  # Vertically center
-        'border': 0  # No border for individual cells
-    })
+#     # Set column A (Name) to be left-aligned, and B-E to be right-aligned
+#     left_align_format = workbook.add_format({
+#         'align': 'left',  # Left-align for column A
+#         'valign': 'vcenter',  # Vertically center
+#         'border': 0  # No border for individual cells
+#     })
 
-    right_align_format = workbook.add_format({
-        'align': 'right',  # Right-align for columns B-E
-        'valign': 'vcenter',  # Vertically center
-        'border': 0  # No border for individual cells
-    })
+#     right_align_format = workbook.add_format({
+#         'align': 'right',  # Right-align for columns B-E
+#         'valign': 'vcenter',  # Vertically center
+#         'border': 0  # No border for individual cells
+#     })
     
-    # Create border around the entire table
-    border_format = workbook.add_format({
-        'border': 1,  # Add border to all sides
-        'border_color': 'black',  # Set border color to black
-        'align': 'center',  # Center-align text
-        'valign': 'vcenter',  # Vertically center text
-        'font_size': 12,  # Set font size
-        'font_color': 'black',  # Set font color to black
-        'bg_color': '#FFFFFF'  # Set background color to white
-    })
+#     # Create border around the entire table
+#     border_format = workbook.add_format({
+#         'border': 1,  # Add border to all sides
+#         'border_color': 'black',  # Set border color to black
+#         'align': 'center',  # Center-align text
+#         'valign': 'vcenter',  # Vertically center text
+#         'font_size': 12,  # Set font size
+#         'font_color': 'black',  # Set font color to black
+#         'bg_color': '#FFFFFF'  # Set background color to white
+#     })
 
-    # Merge and format the first row (A1:E1) for each sheet
-    sheet1.merge_range('A1:AE1', f'Client Navigation Report {report_month} {report_year}', header_format)
+#     # Merge and format the first row (A1:E1) for each sheet
+#     sheet1.merge_range('A1:AE1', f'Client Navigation Report {report_month} {report_year}', header_format)
 
-    # Set column alignment and width
-    # sheet1.set_column('A:A', 20, left_align_format)  
+#     # Set column alignment and width
+#     # sheet1.set_column('A:A', 20, left_align_format)  
 
-    print(f"Navigation Excel file saved to {data_path}")
+#     print(f"Navigation Excel file saved to {data_path}")
 
 # --------------------------- KILL PORT ---------------------------------
 
