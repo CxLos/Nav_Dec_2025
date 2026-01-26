@@ -418,7 +418,7 @@ html, body {
   gap: 2%;
 
   width: 98%;
-  height: 80vh;
+  height: 90vh;
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
 }
@@ -551,6 +551,75 @@ html, body {
   overflow-x: auto; 
   white-space: nowrap; 
 } */
+
+/* =================== Dropdown Styling =================== */
+
+/* The main dropdown control box */
+#month-dropdown .Select-control {
+  background-color: rgb(255, 249, 169) !important;
+  border: 4px solid rgb(231, 200, 0) !important;
+  border-radius: 50px !important;
+}
+
+/* The dropdown menu that appears when you click */
+#month-dropdown .Select-menu-outer {
+  border: 4px solid rgb(240, 208, 0) !important;
+  background-color: rgb(255, 248, 156) !important;
+  border-radius: 10px !important;
+}
+
+/* Individual options in the dropdown menu */
+#month-dropdown .Select-option {
+  cursor: pointer !important;
+}
+
+/* Main dropdown control */
+.Select-control,
+.Select-control:hover,
+#year-dropdown,
+#month-dropdown,
+div[id="year-dropdown"],
+div[id="month-dropdown"],
+div[id="year-dropdown"] > div,
+div[id="month-dropdown"] > div {
+  cursor: pointer !important;
+}
+
+/* Dropdown menu container */
+.Select-menu-outer {
+  background-color: rgb(250, 242, 127) !important;
+  border: 3px solid rgb(240, 208, 0);
+  border-radius: 10px !important;
+}
+
+/* Individual dropdown options */
+.Select-option {
+  background-color: rgb(253, 180, 180) !important;
+  color: rgb(137, 24, 217) !important;
+  font-weight: bold !important;
+  padding: 8px 12px !important;
+}
+
+/* Hovered option */
+.Select-option.is-focused,
+.Select-option:hover {
+  background-color: rgb(217, 24, 24) !important;
+  color: white !important;
+}
+
+/* Selected option */
+.Select-option.is-selected {
+  background-color: rgb(217, 24, 24) !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+/* Additional selectors for newer Dash versions */
+div[class*="option"]:hover,
+div[data-value]:hover {
+  background-color: rgb(217, 24, 24) !important;
+  color: white !important;
+}
 
 /* ================ Media Screen ================ */
 
